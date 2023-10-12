@@ -1,0 +1,111 @@
+data:
+  data_name: Track
+  log_dir: ../logging
+  dataset_dir: ../dataset
+  split:
+    train: 0.6
+    iid_val: 0.1
+    iid_test: 0.1
+    ood_val: 0.1
+    ood_test: 0.1
+  iid_split:
+    train: 0.75
+    val: 0.125
+    test: 0.125
+
+  feature_type: only_ones # only_pos or only_x or both_x_pos or only_ones
+  setting: No-Info
+  metrics: acc
+
+optimizer:
+  batch_size: 256
+  wp_lr: 1.0e-3
+  wp_wd: 1.0e-5
+  attn_lr: 1.0e-3
+  attn_wd: 1.0e-5
+  emb_lr: 1.0e-3
+  emb_wd: 1.0e-5
+
+lri_bern:
+  dgcnn:
+    final_r: 0.7
+  egnn:
+    final_r: 0.7
+  pointtrans:
+    final_r: 0.5
+
+  kr: 5
+  epochs: 200
+  info_loss_coef: 0.1
+  one_encoder: true
+  attn_constraint: none
+  temperature: 1.0
+  decay_interval: 10
+  decay_r: 0.1
+  init_r: 0.9
+  pred_loss_coef: 1.0
+  dropout_p: 0.2
+  norm_type: batch
+  act_type: relu
+
+erm:
+  kr: 5
+  epochs: 200
+  one_encoder: true
+
+mixup:
+  epochs: 200
+  kr: 5
+  one_encoder: true
+  alpha: 0.1
+  num_classes: 2
+  prob: 0.25
+
+groupdro:
+  epochs: 200
+  kr: 5
+  one_encoder: true
+  coeff: 0.01
+
+dir:
+  kr: 5
+  epochs: 200
+  one_encoder: False
+  alpha: 1.0e-4
+  causal_ratio: 0.5
+  dropout_p: 0.2
+  norm_type: batch
+  act_type: relu
+
+VREx:
+  epochs: 200
+  kr: 5
+  one_encoder: true
+  coeff: 0.001
+
+coral:
+  epochs: 200
+  iters_per_epoch: 150
+  kr: 5
+  one_encoder: true
+  coeff: 0.01
+
+DANN:
+  epochs: 200
+  iters_per_epoch: 150
+  kr: 5
+  one_encoder: true
+  coeff: 0.1
+  max_iters: 1000
+  dropout_p: 0.2
+  norm_type: batch
+  act_type: relu
+
+shift:
+  pileup:
+    shift_name: pileup
+    restrict_TL_train: 500
+    target: 90 # 50 or 90
+    pileup_train: 10
+    pileup_val: 90
+    pileup_test: 90

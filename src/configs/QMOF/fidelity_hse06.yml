@@ -1,0 +1,63 @@
+data:
+  data_name: QMOF
+  log_dir: ../logging
+  dataset_dir: ../dataset
+  feature_type: only_x
+  measure: bandgap
+  setting: No-Info
+  metrics: mae
+  atom_types: 79
+  split:
+    train: 0.75
+    val: 0.125
+    test: 0.125
+
+optimizer:
+  batch_size: 256
+  wp_lr: 1.0e-3
+  wp_wd: 1.0e-5
+  attn_lr: 1.0e-3
+  attn_wd: 1.0e-5
+  emb_lr: 1.0e-3
+  emb_wd: 1.0e-5
+
+erm:
+  epochs: 100
+  kr: 10
+  one_encoder: true
+
+VREx:
+  epochs: 100
+  kr: 10
+  one_encoder: true
+  coeff: 0.001
+
+groupdro:
+  epochs: 100
+  kr: 10
+  one_encoder: true
+  coeff: 0.01
+
+coral:
+  epochs: 100
+  iters_per_epoch: 150
+  kr: 10
+  one_encoder: true
+  coeff: 0.001
+
+DANN:
+  epochs: 100
+  iters_per_epoch: 150
+  kr: 10
+  one_encoder: true
+  coeff: 0.001
+  max_iters: 1000
+  dropout_p: 0.2
+  norm_type: batch
+  act_type: relu
+
+shift:
+  fidelity:
+    shift_name: fidelity
+    target: hse06
+    restrict_TL_train: 500
