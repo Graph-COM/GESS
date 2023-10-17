@@ -24,7 +24,7 @@ class HEP_OOD_Shift(InMemoryDataset):
         self.iid_split = data_config['iid_split']
         self.dataset_dir = Path(root)
         self.bkg_dir = self.dataset_dir / 'raw' / 'background'
-        self.sig_dir = self.dataset_dir / 'raw' / 'signal' / 'z2mu'
+        self.sig_dir = self.dataset_dir / 'raw' / 'z2mu'
         # TODO: Raw Dataset TO be uploaded.
         self.url_raw = ...
         self.seed = seed
