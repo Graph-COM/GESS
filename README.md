@@ -1,6 +1,6 @@
 # GDL-DS
 
-This repository contains the official implementation of GDL-DS as described in the paper: GDL-DS: A Benchmark for Geometric Deep Learning under Distribution Shifts by Deyu Zou, Shikun Liu, Siqi Miao, Victor Fung, Shiyu Chang, and Pan Li.
+This repository contains the official implementation of GDL-DS as described in the paper: [GDL-DS: A Benchmark for Geometric Deep Learning under Distribution Shifts](https://arxiv.org/abs/2310.08677) by Deyu Zou, Shikun Liu, Siqi Miao, Victor Fung, Shiyu Chang, and Pan Li.
 
 ## Introduction
 
@@ -69,4 +69,15 @@ The tuned hyperparameters in the `egnn` backbone for all distribution shifts and
 ## Reference
 
 If you find our paper and repo useful, please cite our paper:
+
+```
+@misc{zou2023gdlds,
+      title={GDL-DS: A Benchmark for Geometric Deep Learning under Distribution Shifts}, 
+      author={Deyu Zou and Shikun Liu and Siqi Miao and Victor Fung and Shiyu Chang and Pan Li},
+      year={2023},
+      eprint={2310.08677},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
 
