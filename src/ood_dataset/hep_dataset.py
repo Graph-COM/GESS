@@ -50,7 +50,7 @@ class HEP_OOD_Shift(InMemoryDataset):
 
     @property
     def processed_dir(self) -> str:
-        return osp.join(self.root, f'processed_{self.tesla}')
+        return osp.join(self.root, f'processed')
 
 
 class HEP_Pileup_Shift(HEP_OOD_Shift):
