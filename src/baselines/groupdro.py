@@ -16,6 +16,7 @@ class GroupDRO(ERM):
       year={2019}
     }
     """
+
     def __init__(self, clf, criterion, config):
         super(GroupDRO, self).__init__(clf, criterion)
         self.exp_coeff = config['coeff']
@@ -41,4 +42,5 @@ class GroupDRO(ERM):
         if phase != 'train':
             return pred_loss, {'loss': pred_loss.item(), 'pred': pred_loss.item()}, clf_logits
         dro_loss = self.loss_postprocess(losses, data)
+        # 　for signal shift, we use dro_loss + pred_loss because there is no subgroup splits for positive samples.
         return dro_loss, {'loss': dro_loss.item(), 'pred': pred_loss.item(), 'dro': dro_loss.item()}, clf_logits
