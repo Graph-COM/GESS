@@ -42,5 +42,6 @@ class GroupDRO(ERM):
         if phase != 'train':
             return pred_loss, {'loss': pred_loss.item(), 'pred': pred_loss.item()}, clf_logits
         dro_loss = self.loss_postprocess(losses, data)
-        # 　for signal shift, we use dro_loss + pred_loss because there is no subgroup splits for positive samples.
+        # 　for signal shift, we use dro_loss + pred_loss as the loss
+        #   because there is no subgroup splits for positive samples in this case.
         return dro_loss, {'loss': dro_loss.item(), 'pred': pred_loss.item(), 'dro': dro_loss.item()}, clf_logits

@@ -21,7 +21,7 @@ class Drug3d(InMemoryDataset):
     def __init__(self, root_dir, data_config, shift_config, seed):
         self.seed = seed
         # TODO: Processed Dataset TO be uploaded.
-        self.url_processed = ...
+        self.url_processed = "https://zenodo.org/record/10070680/files/Bio_processed.zip"
         self.ood_type = shift_config['target']
         ATOM_TYPES = ['C', 'N', 'O', 'S', 'F', 'P', 'Cl', 'Br', 'Na', 'I', 'B', 'H', 'Si', '*']
         self.setting = data_config['setting']
@@ -55,27 +55,24 @@ class Drug3d(InMemoryDataset):
     def processed_file_names(self):
         return [f"{self.ood_type}_{self.setting}.pt"]
 
-    def download_(self):
-        if osp.exists(self.processed_paths[0]):
-            return
+    def process(self):
         print("our raw data are sourced from https://github.com/tencent-ailab/DrugOOD, Download {"
               "lbap_core_ic50_assay, lbap_core_ic50_scaffold, lbap_core_ic50_size}.json to the raw_dir "
               "../dataset/DrugOOD-3D/raw/ if you need. (not necessary!)")
-        print("Processed Dataset TO be uploaded. The URL could not be used now.")
-        exit(-1)
         if decide_download(self.url_processed, is_raw=False):
             path = download_url(self.url_processed, self.root)
             extract_zip(path, self.root)
             os.unlink(path)
-        else:
-            print('Stop downloading.')
-            shutil.rmtree(self.root)
-            exit(-1)
-
-    def process(self):
-        self.download_()
+            return
         base_dir = Path(self.root) / 'raw'
-        dataset = mmcv.load(base_dir / f"{self.ood_type}.json")["split"]
+        try:
+            dataset = mmcv.load(base_dir / f"{self.ood_type}.json")["split"]
+        except:
+            print("raw files not found!")
+            print("our raw data are sourced from https://github.com/tencent-ailab/DrugOOD, Download {"
+                  "lbap_core_ic50_assay, lbap_core_ic50_scaffold, lbap_core_ic50_size}.json to the raw_dir "
+                  "../dataset/DrugOOD-3D/raw/ if you need. (not necessary!)")
+            exit(-1)
         idx_split, Dataset = dict(), []
         if self.setting.split('_')[0] == 'Par-Label':
             np.random.seed(42)

@@ -25,8 +25,6 @@ class HEP_OOD_Shift(InMemoryDataset):
         self.dataset_dir = Path(root)
         self.bkg_dir = self.dataset_dir / 'raw' / 'background'
         self.sig_dir = self.dataset_dir / 'raw' / 'z2mu'
-        # TODO: Raw Dataset TO be uploaded.
-        self.url_raw = ...
         self.seed = seed
         self.pileup = pileup
         super().__init__(root)
@@ -55,8 +53,7 @@ class HEP_OOD_Shift(InMemoryDataset):
 
 class HEP_Pileup_Shift(HEP_OOD_Shift):
     def __init__(self, root, data_config, shift_config, seed, tesla='2T'):
-        # TODO: Processed Dataset TO be uploaded.
-        self.url_processed = ...
+        self.url_processed = None
         self.shift_type = 'pileup_shift'
         self.pileup_ood = shift_config['target']
         self.restrict_TL_train = shift_config['restrict_TL_train']
@@ -70,27 +67,15 @@ class HEP_Pileup_Shift(HEP_OOD_Shift):
     def processed_file_names(self):
         return [f'{self.shift_type}_{self.pileup}_{self.pileup_ood}_{self.setting}.pt']
 
-    def download_(self):
-        print("Raw and Processed Dataset TO be uploaded. The URL could not be used to be downloaded now.")
-        exit(-1)
-        if osp.exists(self.processed_paths[0]):
-            return
-        if decide_download(self.url_raw, is_raw=True):
-            path = download_url(self.url_raw, self.root)
+    def process(self):
+        target_zip_file = f"Track_processed_pileup_shift_{self.pileup}_{self.pileup_ood}_{self.setting}.zip".replace("#", "")
+        self.url_processed = get_url(target_zip_file)
+        if decide_download(self.url_processed, is_raw=False):
+            path = download_url(self.url_processed, self.root)
             extract_zip(path, self.root)
             os.unlink(path)
-        else:
-            if decide_download(self.url_processed, is_raw=False):
-                path = download_url(self.url_processed, self.root)
-                extract_zip(path, self.root)
-                os.unlink(path)
-            else:
-                print('Stop downloading.')
-                shutil.rmtree(self.root)
-                exit(-1)
+            return
 
-    def process(self):
-        self.download_()
         def obtain_list(event_type, pileups):
             # event_type = 'bkg' or 'signal'
             base_dir = self.bkg_dir if event_type == 'bkg' else self.sig_dir
@@ -98,7 +83,11 @@ class HEP_Pileup_Shift(HEP_OOD_Shift):
             get_list = pickle.load(open(file_path, 'rb'))
             return get_list
 
-        bkg_list = obtain_list('bkg', self.pileup)
+        try:
+            bkg_list = obtain_list('bkg', self.pileup)
+        except:
+            print("raw files not found!")
+            exit(-1)
         sig_list = obtain_list('signal', self.pileup)
         bkg_list_ood = obtain_list('bkg', self.pileup_ood)
         sig_list_ood = obtain_list('signal', self.pileup_ood)
@@ -186,8 +175,7 @@ class HEP_Pileup_Shift(HEP_OOD_Shift):
 
 class HEP_Signal_Shift(HEP_OOD_Shift):
     def __init__(self, root, data_config, shift_config, seed, tesla='2T'):
-        # TODO: Processed Dataset TO be uploaded.
-        self.url_processed = ...
+        self.url_processed = None
         self.shift_type = 'signal_shift'
         self.dataset_dir = Path(root)
         self.tesla = tesla
@@ -205,27 +193,15 @@ class HEP_Signal_Shift(HEP_OOD_Shift):
     def processed_file_names(self):
         return [f'{self.shift_type}_pileup_{self.pileup}_{self.setting}_target_{self.target_domain}.pt']
 
-    def download_(self):
-        print("Raw and Processed Dataset TO be uploaded. The URL could not be used to be downloaded now.")
-        exit(-1)
-        if osp.exists(self.processed_paths[0]):
-            return
-        if decide_download(self.url_raw, is_raw=True):
-            path = download_url(self.url_raw, self.root)
+    def process(self):
+        target_zip_file = f"Track_processed_signal_shift_pileup_10_{self.setting}_target_{self.target_domain}.zip".replace(
+            "#", "")
+        self.url_processed = get_url(target_zip_file)
+        if decide_download(self.url_processed, is_raw=False):
+            path = download_url(self.url_processed, self.root)
             extract_zip(path, self.root)
             os.unlink(path)
-        else:
-            if decide_download(self.url_processed, is_raw=False):
-                path = download_url(self.url_processed, self.root)
-                extract_zip(path, self.root)
-                os.unlink(path)
-            else:
-                print('Stop downloading.')
-                shutil.rmtree(self.root)
-                exit(-1)
-
-    def process(self):
-        self.download_()
+            return
         # for source domain, we have z, z'80/70/60/50, 5 domain in total
         # used for source domain
         signal_z_path = self.z_dir / f'signal_events_{self.tesla}_pileups_{self.pileup}.pkl'
@@ -241,8 +217,11 @@ class HEP_Signal_Shift(HEP_OOD_Shift):
         target_signal = self.tau_dir / f'signal_events_{self.tesla}_pileups_{self.pileup}.pkl' if len(
             target_info) == 1 else \
             self.z_prime_dir / f'signal_events_m0_{target_info[1]}_pileups_{self.pileup}.pkl'
-
-        bkg_list = pickle.load(open(background_path, 'rb'))
+        try:
+            bkg_list = pickle.load(open(background_path, 'rb'))
+        except:
+            print("raw files not found!")
+            exit(-1)
         z_list = pickle.load(open(signal_z_path, 'rb'))
         z_p_80_list = pickle.load(open(signal_z_p_80, 'rb'))
         z_p_70_list = pickle.load(open(signal_z_p_70, 'rb'))
@@ -367,3 +346,12 @@ def get_size_extremum(dataset):
         size_list.append(data[0].shape[0])
     size_list = np.array(size_list)
     return size_list.min(), size_list.max()
+
+
+def get_url(target_zip):
+    if target_zip in ["Track_processed_pileup_shift_10_50_Par-Label_1000.zip",
+                      "Track_processed_pileup_shift_10_50_Par-Label_500.zip",
+                      "Track_processed_signal_shift_pileup_10_Par-Label_500_target_tau.zip"]:
+        return f"https://zenodo.org/record/10012747/files/{target_zip}"
+    else:
+        return f"https://zenodo.org/record/10070680/files/{target_zip}"

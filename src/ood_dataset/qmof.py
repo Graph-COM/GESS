@@ -11,7 +11,6 @@ import random
 from ..utils import get_random_idx_split
 import shutil
 
-
 domain_mapping = {'pbe': 0, 'hle17': 1, 'hse06_10hf': 2, 'hse06': 3}
 
 
@@ -21,10 +20,10 @@ class QMOF(InMemoryDataset):
         As for QMOF, our raw data are sourced from https://github.com/Andrew-S-Rosen/QMOF and
         https://doi.org/10.6084/m9.figshare.13147324.
     """
+
     def __init__(self, root, data_config, shift_config, seed):
         self.seed = seed
-        # TODO: Processed Dataset TO be uploaded.
-        self.url_processed = ...
+        self.url_processed = "https://zenodo.org/record/10070680/files/QMOF_processed.zip"
         self.split = data_config['split']
         self.targ_method = shift_config['target']  # hse06_10hf
         self.high_fi_list = ['hle17', 'hse06_10hf', 'hse06']
@@ -63,28 +62,24 @@ class QMOF(InMemoryDataset):
     def processed_file_names(self):
         return [f'{self.setting}_{self.measure}_target_{self.targ_method}.pt']
 
-    def download_(self):
-        if osp.exists(self.processed_paths[0]):
-            return
+    def process(self):
         print("our raw data are sourced from https://doi.org/10.6084/m9.figshare.13147324. Download the file "
-              "`qmof_database` into the raw_dir ../dataset/QMOF/raw/ if you need (not necessary!)")
-        print("Processed Dataset To be uploaded. The URL could not be used now.")
-        exit(-1)
+              "`qmof_database` into the raw_dir ../dataset/QMOF/raw/ if you need (not necessary)")
         if decide_download(self.url_processed, is_raw=False):
             path = download_url(self.url_processed, self.root)
             extract_zip(path, self.root)
             os.unlink(path)
-        else:
-            print('Stop downloading.')
-            shutil.rmtree(self.root)
-            exit(-1)
-
-    def process(self):
-        self.download_()
+            return
         base_dir = Path(self.raw_dir) / 'qmof_database'
         structure_dir = base_dir / 'relaxed_structures'
-
-        data = pd.read_csv(base_dir / 'qmof.csv', low_memory=False)
+        try:
+            data = pd.read_csv(base_dir / 'qmof.csv', low_memory=False)
+        except FileNotFoundError as e:
+            print(e)
+            print("raw files not found!")
+            print("our raw data are sourced from https://doi.org/10.6084/m9.figshare.13147324. Download the file "
+                  "`qmof_database` into the raw_dir ../dataset/QMOF/raw/ if you need.")
+            exit(-1)
         files = [x for x in structure_dir.glob('**/*') if x.is_file()]
         # source_files & targ_files
         random.seed(0)
