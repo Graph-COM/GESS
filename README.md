@@ -68,16 +68,4 @@ The tuned hyperparameters in the `egnn` backbone for all distribution shifts and
 
 ## Reference
 
-If you find our paper and repo useful, please cite our paper:
-
-```
-@misc{zou2023gdlds,
-      title={GDL-DS: A Benchmark for Geometric Deep Learning under Distribution Shifts}, 
-      author={Deyu Zou and Shikun Liu and Siqi Miao and Victor Fung and Shiyu Chang and Pan Li},
-      year={2023},
-      eprint={2310.08677},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
-}
-```
 
