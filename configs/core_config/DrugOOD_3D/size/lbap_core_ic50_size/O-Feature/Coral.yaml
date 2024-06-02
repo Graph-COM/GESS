@@ -1,0 +1,7 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: Coral
+  model_name: BaseModel
+  coeff: 0.1

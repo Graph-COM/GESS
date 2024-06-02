@@ -1,0 +1,9 @@
+gpu_idx: 0
+seed: 0
+num_workers: 0
+
+dataset:
+  dataset_root: null
+
+path:
+  logging_dir: null

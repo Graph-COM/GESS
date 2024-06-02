@@ -1,0 +1,7 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: VREx
+  model_name: BaseModel
+  coeff: 1.0

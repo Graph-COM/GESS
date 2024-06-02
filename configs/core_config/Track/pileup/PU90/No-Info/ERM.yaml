@@ -1,0 +1,6 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: ERM
+  model_name: BaseModel

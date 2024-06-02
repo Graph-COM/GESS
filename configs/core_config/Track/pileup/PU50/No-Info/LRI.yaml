@@ -1,0 +1,14 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: LRIBern
+  model_name: LRIModel
+  coeff: 1.0
+  extra:
+    attn_constraint: none
+    temperature: 1.0
+    decay_interval: 10
+    decay_r: 0.1
+    init_r: 0.9
+    final_r: 0.7

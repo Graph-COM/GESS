@@ -1,0 +1,26 @@
+includes:
+  - ../base.yaml
+
+train:
+  lr: 1.0e-3
+  wd: 1.0e-5
+
+dataset:
+  feature_type: only_ones
+  metrics_name: acc
+  num_task: 1
+  dataloader_name: BaseDataloader
+  extra:
+    split:
+      train: 0.6
+      iid_val: 0.1
+      iid_test: 0.1
+      ood_val: 0.1
+      ood_test: 0.1
+    iid_split:
+      train: 0.75
+      val: 0.125
+      test: 0.125
+
+backbone:
+  kr: 5

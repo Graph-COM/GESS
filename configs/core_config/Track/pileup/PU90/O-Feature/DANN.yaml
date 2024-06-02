@@ -1,0 +1,10 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: DANN
+  model_name: DANNModel
+  coeff: 0.1
+  extra:
+    max_iters: 1000
+    disc_hidden: 256

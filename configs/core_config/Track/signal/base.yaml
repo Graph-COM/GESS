@@ -1,0 +1,14 @@
+includes:
+  - ../base.yaml
+
+train:
+  epochs: 100
+  train_bs: 256
+  id_val_bs: 256
+  id_test_bs: 256
+  ood_val_bs: 256
+  ood_test_bs: 256
+
+dataset:
+  data_name: Track_Signal
+  shift_name: signal

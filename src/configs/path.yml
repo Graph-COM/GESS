@@ -1,8 +1,0 @@
-dir_config:
-  log_dir: ../logging
-  dataset_dir: ../dataset
-  logging_file: logging.txt
-  logging_ood_file: logging_ood.txt
-  loss_file: logging_train_loss.txt
-  result_path: result.txt
-  result_ood_path: result_ood.txt

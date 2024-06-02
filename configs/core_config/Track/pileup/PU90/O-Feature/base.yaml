@@ -1,0 +1,10 @@
+pipeline: O_Feature_Pipeline
+
+dataset:
+  setting: O-Feature
+
+train:
+  iters_per_epoch: 150
+
+includes:
+  - ../base.yaml

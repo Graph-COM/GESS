@@ -1,0 +1,9 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: ERM
+  model_name: BaseModel
+
+dataset:
+  OOD_labels: 1000

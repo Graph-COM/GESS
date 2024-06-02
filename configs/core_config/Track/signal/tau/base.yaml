@@ -1,0 +1,7 @@
+includes:
+  - ../base.yaml
+
+dataset:
+  target: tau
+  extra:
+    pileup: 10  

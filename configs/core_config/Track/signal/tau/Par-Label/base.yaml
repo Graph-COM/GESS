@@ -1,0 +1,7 @@
+pipeline: Par_Label_Pipeline
+
+dataset:
+  setting: Par-Label
+
+includes:
+  - ../base.yaml

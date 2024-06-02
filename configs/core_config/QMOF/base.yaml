@@ -1,0 +1,30 @@
+includes:
+  - ../base.yaml
+
+train:
+  lr: 1.0e-3
+  wd: 1.0e-5
+  epochs: 100
+  train_bs: 256
+  id_val_bs: 256
+  id_test_bs: 256
+  ood_val_bs: 256
+  ood_test_bs: 256
+
+dataset:
+  data_name: QMOF
+  feature_type: only_x
+  metrics_name: mae
+  num_task: 1
+  dataloader_name: BaseDataloader
+  extra:
+    measure: bandgap
+    atom_types: 79
+    split:  # Only used in processing raw files. So ignore it.
+      train: 0.75
+      val: 0.125
+      test: 0.125
+
+
+backbone:
+  kr: 10

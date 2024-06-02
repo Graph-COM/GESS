@@ -1,0 +1,22 @@
+includes:
+  - ../base.yaml
+
+train:
+  lr: 1.0e-3
+  wd: 1.0e-5
+  epochs: 100
+  train_bs: 256
+  id_val_bs: 256
+  id_test_bs: 256
+  ood_val_bs: 256
+  ood_test_bs: 256
+
+dataset:
+  data_name: DrugOOD_3D
+  dataloader_name: BaseDataloader
+  feature_type: only_x
+  metrics_name: auc
+  num_task: 1
+
+backbone:
+  kr: 3

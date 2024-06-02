@@ -1,0 +1,7 @@
+pipeline: BasePipeline
+
+dataset:
+  setting: No-Info
+
+includes:
+  - ../base.yaml

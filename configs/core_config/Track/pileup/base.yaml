@@ -1,0 +1,14 @@
+includes:
+  - ../base.yaml
+
+train:
+  epochs: 200
+  train_bs: 256
+  id_val_bs: 256
+  id_test_bs: 256
+  ood_val_bs: 32
+  ood_test_bs: 32
+
+dataset:
+  data_name: Track_Pileup
+  shift_name: pileup

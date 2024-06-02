@@ -1,0 +1,7 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: GroupDRO
+  model_name: BaseModel
+  coeff: 0.001

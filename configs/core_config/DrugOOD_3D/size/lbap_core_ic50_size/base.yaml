@@ -1,0 +1,5 @@
+includes:
+  - ../base.yaml
+
+dataset:
+  target: lbap_core_ic50_size

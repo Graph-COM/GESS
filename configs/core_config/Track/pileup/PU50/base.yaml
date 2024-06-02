@@ -1,0 +1,9 @@
+includes:
+  - ../base.yaml
+
+dataset:
+  target: 50
+  extra:
+    pileup_train: 10
+    pileup_val: 50
+    pileup_test: 50    

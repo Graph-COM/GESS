@@ -1,0 +1,9 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: DIR
+  model_name: DIRModel
+  coeff: 0.5
+  extra:
+    alpha: 1.0e-4

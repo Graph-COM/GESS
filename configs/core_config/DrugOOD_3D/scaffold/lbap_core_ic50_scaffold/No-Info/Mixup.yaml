@@ -1,0 +1,10 @@
+includes:
+  - base.yaml
+
+algo:
+  alg_name: Mixup
+  model_name: BaseModel
+  extra:
+    alpha: 0.1
+    prob: 0.5
+    num_classes: 2
